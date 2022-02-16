@@ -1015,12 +1015,12 @@ DMASOMETHING EQU $5004
 800DEC: 2D40 FFFC                move.l  D0, (-$4,A6)            ; incremented DMA count in high word, or 0 -> local var
 800DF0: 7007                     moveq   #$7, D0
 800DF2: 2F00                     move.l  D0, -(A7)
-800DF4: 4EB9 0080 0B36           jsr     $800b36.l
+800DF4: 4EB9 0080 0B36           jsr     $800b36.l               ; read HDC status
 800DFA: 588F                     addq.l  #4, A7
-800DFC: 0280 0000 0001           andi.l  #$1, D0
-800E02: 81AE FFFC                or.l    D0, (-$4,A6)
+800DFC: 0280 0000 0001           andi.l  #$1, D0                 ; isolate ERR flag
+800E02: 81AE FFFC                or.l    D0, (-$4,A6)            ; OR in the ERROR flag from HDC status
 800E06: 4EB9 0080 0D6A           jsr     $800d6a.l               ; HDC reset
-800E0C: 202E FFFC                move.l  (-$4,A6), D0
+800E0C: 202E FFFC                move.l  (-$4,A6), D0            ; return status in D0
 800E10: 4E5E                     unlk    A6
 800E12: 4E75                     rts
 
